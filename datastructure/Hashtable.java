@@ -54,8 +54,7 @@ public class Hashtable {
     /**
      * Rehashes the hashtable doubling the capacity.
      */
-    private void rehash() {
-        Hashtable n = new Hashtable(capacity * 2, loadfactor);
+    private void rehash(Hashtable n) {
         for(int i = 0; i < capacity; i++) {
             if(table[i] != null) {
                 Hashbucket curr = table[i];
@@ -87,7 +86,7 @@ public class Hashtable {
     public int put(int k, int v) {
         //Check if rehashing is needed
         if(size >= capacity * loadfactor)
-            rehash();
+            rehash(new Hashtable(capacity * 2, loadfactor));
 
         //Add new value
         int hash = hash(k);
@@ -179,8 +178,8 @@ public class Hashtable {
             if(curr == null)
                 return 0;
             else {
-                if(first) {
-                    table[hash] = null;
+                if(first && curr.next == null) {
+                    table[hash] = curr.next;
                     size--;
                     return curr.value;
                 } else {
@@ -189,30 +188,6 @@ public class Hashtable {
                     return curr.value;
                 }
             }
-        }
-    }
-
-    /**
-     * Increases the value of a bucket by 1. This is better than using ie. put(key, remove(key) + 1),
-     * because we avoid issues.
-     * @param key of the bucket.
-     * @return true if increased, false if not corresponding bucket not found.
-     */
-    public boolean increaseVal(int key) {
-        int hash = hash(key);
-        if(table[hash] == null)
-            return false;
-        else {
-            Hashbucket curr = table[hash];
-            while(curr != null && curr.key != key) {
-                curr = curr.next;
-            }
-            //Check if found or the value doesn't exist
-            if(curr == null)
-                return false;
-            else
-                curr.value += 1;
-                return true;
         }
     }
 

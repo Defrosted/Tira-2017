@@ -108,7 +108,7 @@ public class Tira2017 {
 		for(int i =  0; i < a.length; i++) {
 			x = a[i].intValue();
 			if(or.exists(x)) {
-				or.increaseVal(x);
+				or.put(x, or.remove(x) + 1);
 			} else {
 				or.put(x, 1);
 			}
@@ -117,7 +117,7 @@ public class Tira2017 {
 		for(int i =  0; i < b.length; i++) {
 			x = b[i].intValue();
 			if(or.exists(x)) {
-				or.increaseVal(x);
+				or.put(x, or.remove(x) + 1);
 			} else {
 				or.put(x, 1);
 			}
