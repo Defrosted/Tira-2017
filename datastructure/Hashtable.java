@@ -88,6 +88,10 @@ public class Hashtable {
         if(size >= capacity * loadfactor)
             rehash(new Hashtable(capacity * 2, loadfactor));
 
+        //Check if the key exists and overwrite
+        if(exists(k))
+            remove(k);
+
         //Add new value
         int hash = hash(k);
         if(table[hash] == null) {
@@ -178,7 +182,11 @@ public class Hashtable {
             if(curr == null)
                 return 0;
             else {
-                if(first) {
+                if(first && curr.next == null) {
+                    table[hash] = null;
+                    size--;
+                    return curr.value;
+                } else if (first && curr.next != null) {
                     table[hash] = curr.next;
                     size--;
                     return curr.value;
