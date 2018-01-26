@@ -182,11 +182,7 @@ public class Hashtable {
             if(curr == null)
                 return 0;
             else {
-                if(first && curr.next == null) {
-                    table[hash] = null;
-                    size--;
-                    return curr.value;
-                } else if (first && curr.next != null) {
+                if(first) {
                     table[hash] = curr.next;
                     size--;
                     return curr.value;
