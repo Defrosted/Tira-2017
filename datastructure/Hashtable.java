@@ -47,9 +47,7 @@ public class Hashtable {
      * @return the hash of the key.
      */
     private int hash(int key) {
-        if(key < 0)
-            key *= -1;
-        return key % capacity;
+        return (key < 0) ? -key % capacity : key % capacity;
     }
 
     /**
@@ -168,26 +166,21 @@ public class Hashtable {
         if(table[hash] == null)
             return 0;
         else {
-            Hashbucket curr = table[hash];
-            Hashbucket prev = curr;
-            boolean first = true;
-            while(curr != null && curr.key != key) {
-                curr = curr.next;
-
-                if(first)
-                    first = false;
-                else
+            Hashbucket curr = table[hash].next;
+            Hashbucket prev = table[hash];
+            if(key == prev.key) {
+                table[hash] = curr;
+                size--;
+                return prev.value;
+            } else {
+                while(curr != null && curr.key != key) {
+                    curr = curr.next;
                     prev = prev.next;
-            }
-            //Check if found or the value doesn't exist
-            if(curr == null)
-                return 0;
-            else {
-                if(first) {
-                    table[hash] = curr.next;
-                    size--;
-                    return curr.value;
-                } else {
+                }
+                //Check if found or the value doesn't exist
+                if(curr == null)
+                    return 0;
+                else {
                     prev.next = curr.next;
                     size--;
                     return curr.value;
