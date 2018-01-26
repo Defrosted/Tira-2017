@@ -47,7 +47,8 @@ public class Hashtable {
      * @return the hash of the key.
      */
     private int hash(int key) {
-        //Hash function
+        if(key < 0)
+            key *= -1;
         return key % capacity;
     }
 
