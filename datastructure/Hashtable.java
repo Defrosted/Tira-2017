@@ -54,17 +54,20 @@ public class Hashtable {
      * Rehashes the hashtable doubling the capacity.
      */
     private void rehash(Hashtable n) {
-        for(int i = 0; i < capacity; i++) {
-            if(table[i] != null) {
-                Hashbucket curr = table[i];
-                while(curr != null) {
-                    n.put(curr.key, curr.value);
-                    curr = curr.next;
+        Hashbucket old[] = table;
+        capacity *= 2;
+        size = 0;
+        table = new Hashbucket[capacity];
+        
+        for(int i = 0; i < old.length; i++) {
+            if(old[i] != null) {
+                Hashbucket current = old[i];
+                while(current != null) {
+                    put(current.key, current.value);
+                    current = current.next;
                 }
             }
         }
-        table = n.table;
-        capacity = n.capacity;
     }
 
     public boolean isEmpty() {
