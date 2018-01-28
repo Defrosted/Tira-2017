@@ -212,12 +212,8 @@ public class Tira2017 {
 			BufferedReader br = new BufferedReader(new FileReader(filename));
 			String line = br.readLine();
 			while(line != null) {
-				String values[] = line.split("\n");
-				for(int j = 0; j < values.length; j++) {
-					if(!values[j].isEmpty())
-						n.add(Integer.parseInt(values[j].trim()));
-					line = br.readLine();
-				}
+				n.add(Integer.parseInt(line.trim()));
+				line = br.readLine();
 			}
     	} catch(IOException e) {
 	    	System.out.println("File not found.");;
